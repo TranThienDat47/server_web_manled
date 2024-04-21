@@ -1,0 +1,282 @@
+
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "first_name": "Tran",
+    "last_name": "Dat",
+    "username": "qysn0123456789@gmail.com",
+    "password": "47474747"
+}
+
+###
+POST http://localhost:5000/api/auth/login/check_account_valid
+Content-Type: application/json
+
+{
+  "username": "qysn0123456789@gmail.com"
+}
+###
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "qysn0123456789@gmail.com",
+    "password": "47474747"
+}
+###
+POST http://localhost:5000/api/auth/login/resend
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzExNzgxYjdiZWJkODJjZGYzOWQxOGUiLCJpYXQiOjE2NjIwOTI1MTh9.4dqOqLZdMY8ek8z6YKtT5OuBgPg_9bhnq6rxv6mK9EY
+
+{
+    "username": "qysn0123456789@gmail.com",
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2NGY5NjgxMWI2MGEyYmIxNjMxNTUwNjciLCJpYXQiOjE2OTQwNjY5MDJ9.1eaMcXB2xai4ausB5TEj4d5JVmBevlRSP-SABFbHL3s"
+}
+
+###
+GET http://localhost:5000/api/auth/verify?email=qysn0123456789@gmail.com&token=$argon2id$v=19$m=4096,t=3,p=1$kZlh4b3UVjW3nbD9SRhw6Q$tJNiTYcAsq6f0up4QGtdPJxxfW1p/GWReq3HZv1keQc&hashToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDY4ZmMyYjM4MDhhNzJhOWI2NjAyNzUiLCJpYXQiOjE2ODQ2MDE4OTl9.lT23yJXLTkko6F0rR7Er34flop6DFiXHbuvOtFiN4eE
+Content-Type: application/json
+
+{
+    "username": "qysn0123456789@gmail.com",
+    "password": "47474747"
+}
+
+###
+GET http://localhost:5000/api/auth/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGE2YWRmMjQ4YzdlZTBiMWUzNWU5MzAiLCJpYXQiOjE2ODg3MTgwNTl9.hrtLd5nPv2JGaV_VFWfoKsflz326sDcInUsYpy4Hnls
+
+
+
+
+###show detail
+GET http://localhost:5000/api/products/64e7317876cd938ba221e46b
+
+###add
+POST http://localhost:5000/api/products
+Content-Type: application/json
+
+{
+  "_name":"Đấu la đại lục 8",
+  "anotherName":"Đấu la đại lục",
+  "description":"Mở đầu câu chuyện xuất hiện một nam nhân tên Đường Tam bị Đường Môn truy sát, là tông môn nổi tiếng với các loại cơ quan ám khí nhất là “Phật nộ đường liên”. Thân là thiên tài ngàn năm có một nhưng vì chỉ có thân phận ngoại môn đồ.",
+  "img":"https://upload.wikimedia.org/wikipedia/vi/a/a2/Poster_%C4%90%E1%BA%A5u_La_%C4%90%E1%BA%A1i_L%E1%BB%A5c.jpg",
+  "background": "https://hosonhanvat.vn/wp-content/uploads/2020/03/Dai-La-Dai-Luc-full-tron-bo.jpeg",
+  "episodes": "12",
+  "view": 9999,
+  "releaseDate": "10/01/2002",
+  "news": true,
+  "reacts": 4,
+  "_status": "Lên lịch",
+  "categories": [{"_id": "648ae501467d3e29a27513ca", "title": "Ok la nhe 1"}, {"_id": "648ae5e3acdd172425fc56e4", "title": "Ok la nhe 1"}],
+  "country_of_origin":"China",
+  "keySearch": "10/01/2002"
+}
+
+
+###
+GET http://localhost:5000/api/products
+Content-Type: application/json
+
+{
+  "id":"31201662547555648"
+}
+
+###search
+GET http://localhost:5000/api/products/search?skip=0&limit=null$key=&recently=true
+
+###
+PUT http://localhost:5000/api/products/64e995b97c388de0ba6affc8
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzExNzgxYjdiZWJkODJjZGYzOWQxOGUiLCJpYXQiOjE2NjIwOTI1MTh9.4dqOqLZdMY8ek8z6YKtT5OuBgPg_9bhnq6rxv6mK9EY
+
+{
+   "categories": [{"_id": "648ae501467d3e29a27513ca", "title": "Ok la nhe 1"}, {"_id": "648ae5e3acdd172425fc56e4", "title": "Ok la nhe 1"}]
+}
+
+###
+DELETE  http://localhost:5000/api/products/6450c5dbacca28d4ea06e47b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzExNzgxYjdiZWJkODJjZGYzOWQxOGUiLCJpYXQiOjE2NjIwOTI1MTh9.4dqOqLZdMY8ek8z6YKtT5OuBgPg_9bhnq6rxv6mK9EY
+
+
+###
+GET http://localhost:5000/api/categories
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzExNzgxYjdiZWJkODJjZGYzOWQxOGUiLCJpYXQiOjE2NjIwOTI1MTh9.4dqOqLZdMY8ek8z6YKtT5OuBgPg_9bhnq6rxv6mK9EY
+
+{
+  "_id": "648ae4f5467d3e29a27513c8"
+}
+
+
+###
+POST http://localhost:5000/api/categories
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzExNzgxYjdiZWJkODJjZGYzOWQxOGUiLCJpYXQiOjE2NjIwOTI1MTh9.4dqOqLZdMY8ek8z6YKtT5OuBgPg_9bhnq6rxv6mK9EY
+
+{
+  "title": "Ok la nhe 1",
+  "parent_id": "648ae4f5467d3e29a27513c8",
+  "description":"Ok la nhe"
+}
+
+###
+PUT http://localhost:5000/api/categories
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzExNzgxYjdiZWJkODJjZGYzOWQxOGUiLCJpYXQiOjE2NjIwOTI1MTh9.4dqOqLZdMY8ek8z6YKtT5OuBgPg_9bhnq6rxv6mK9EY
+
+{
+  "title": "Ok la nhe 999",
+  "parentID": "648ae4f5467d3e29a27513c8",
+  "_id": "648ae4f5467d3e29a27513c8",
+  "description":"la sao nhi"
+}
+
+###
+DELETE  http://localhost:5000/api/categories
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzExNzgxYjdiZWJkODJjZGYzOWQxOGUiLCJpYXQiOjE2NjIwOTI1MTh9.4dqOqLZdMY8ek8z6YKtT5OuBgPg_9bhnq6rxv6mK9EY
+
+{
+  "_id": "648ae4f5467d3e29a27513c8"
+}
+
+
+
+###
+
+GET http://localhost:5000/api/comments?parent_id=64b2dce3d84b3ae3d2e3ead9&skip=1&limit=1&sort=-1
+
+
+
+
+###
+POST http://localhost:5000/api/comments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzExNzgxYjdiZWJkODJjZGYzOWQxOGUiLCJpYXQiOjE2NjIwOTI1MTh9.4dqOqLZdMY8ek8z6YKtT5OuBgPg_9bhnq6rxv6mK9EY
+
+{
+  "parent_id": "6311a1f2f17c747a18307266",
+  "user_id": "6311781b7bebd82cdf39d18e",
+  "content": "lam on"
+}
+
+###
+PUT http://localhost:5000/api/comments/6468a6b1aa887cb28f11ce6b
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzExNzgxYjdiZWJkODJjZGYzOWQxOGUiLCJpYXQiOjE2NjIwOTI1MTh9.4dqOqLZdMY8ek8z6YKtT5OuBgPg_9bhnq6rxv6mK9EY
+
+{
+  "comment_id": "6469cb3f8e9fb19df6bcd54b",
+  "new_content": "kaka1"
+}
+
+###
+GET http://localhost:5000/api/product_details/6603db4674ce368028f6974f
+Content-Type: application/json
+
+###
+POST http://localhost:5000/api/product_details
+Content-Type: application/json
+
+{
+    "product_id": "65ed62eb8c6deb70efeb7d9b",
+    "image": "huhu",
+    "title": "hehe",
+    "src": "hehe",
+    "episode": "18"
+}
+
+###
+DELETE  http://localhost:5000/api/product_details/648abc185aa4a2ca9704cb5e
+Content-Type: application/json
+
+
+
+###
+GET http://localhost:5000/api/global_notification
+Content-Type: application/json
+
+{
+    "user_id": "646b252a679f7902c43efe6d"
+}
+
+###
+POST http://localhost:5000/api/global_notification/add_all
+Content-Type: application/json
+
+{
+    "ref_id": "648abc185aa4a2ca9704cb5e",
+    "title": "Thong bao",
+    "content": "Thong bao nay da duoc thong bao"
+}
+
+###
+POST http://localhost:5000/api/global_notification/add_many
+Content-Type: application/json
+
+{
+    "ref_id": "648abc185aa4a2ca9704cb5e",
+    "title": "Thong bao",
+    "content": "Thong bao nay da duoc thong bao",
+    "customers": ["646b252a679f7902c43efe6d", "6468fc2b3808a72a9b660275"]
+}
+
+
+
+###
+POST http://localhost:5000/api/notification
+Content-Type: application/json
+
+{
+    "user_id": "6507fc823058806f3d4c9db8"
+}
+
+
+# ###
+# GET http://localhost:5000/api/comments/dislike
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRmZmUxMjc4YTQxYmFmMTNmNmQ5M2RiIiwiaWF0IjoxNjk1MDQzMTc2fQ.rW-dx0RPs-cng7qgd_FelTnWh60Z52mmQw_uqDdYFng
+
+# {
+#     "comment_id": "65080962fadb249e2dad7d81",
+#     "user_id": "64ffe1278a41baf13f6d93db"
+# }
+
+
+###
+POST http://localhost:5000/api/comments/dislike
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRmZmUxMjc4YTQxYmFmMTNmNmQ5M2RiIiwiaWF0IjoxNjk1MDQzMTc2fQ.rW-dx0RPs-cng7qgd_FelTnWh60Z52mmQw_uqDdYFng
+
+{
+    "comment_id": "65080962fadb249e2dad7d81",
+    "user_id": "64ffe1278a41baf13f6d93db"
+}
+
+
+###
+POST http://localhost:5000/api/comments/num_like
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRmZmUxMjc4YTQxYmFmMTNmNmQ5M2RiIiwiaWF0IjoxNjk1MDQzMTc2fQ.rW-dx0RPs-cng7qgd_FelTnWh60Z52mmQw_uqDdYFng
+
+{
+    "comment_detail_id": "65080962fadb249e2dad7d81"
+}
+
+
+###
+POST http://localhost:5000/api/video/convert
+Content-Type: application/json
+
+{
+  "videoPath": "blob:http://localhost:3002/3461f3b2-073f-4239-a550-f1499e5c6d8b"
+}
+
+###
+GET http://localhost:5000/api/video/thumbnail/6602e9d59daa76b731d4c51e
+Content-Type: application/json
+
+{
+}

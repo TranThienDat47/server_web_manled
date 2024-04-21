@@ -1,0 +1,39 @@
+{
+   "name": "server",
+   "version": "1.0.0",
+   "main": "index.js",
+   "type": "module",
+   "scripts": {
+      "server": "nodemon index",
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "author": "",
+   "license": "ISC",
+   "dependencies": {
+      "@ffmpeg-installer/ffmpeg": "^1.1.0",
+      "argon2": "^0.28.7",
+      "cors": "^2.8.5",
+      "dotenv": "^16.0.1",
+      "express": "^4.18.1",
+      "ffprobe": "^1.1.2",
+      "ffprobe-static": "^3.1.0",
+      "import-fresh": "^3.3.0",
+      "mongodb": "^6.5.0",
+      "mongoose": "^6.4.3",
+      "multer": "^1.4.5-lts.1",
+      "nodemailer": "^6.7.7",
+      "socket.io": "^4.7.1"
+   },
+   "devDependencies": {
+      "ffmpeg": "^0.0.4",
+      "fluent-ffmpeg": "^2.1.2",
+      "gridfs-stream": "^1.1.1",
+      "jsonwebtoken": "^9.0.0",
+      "m3u8stream": "^0.8.6",
+      "nodemon": "^2.0.19",
+      "passport": "^0.6.0",
+      "passport-google-oauth20": "^2.0.0",
+      "uuid": "^9.0.1"
+   },
+   "description": ""
+}
