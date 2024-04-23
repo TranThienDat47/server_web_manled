@@ -76,11 +76,11 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:5000/api/products
+GET http://localhost:5000/api/products/6603db4674ce368028f6974f
 Content-Type: application/json
 
 {
-  "id":"31201662547555648"
+  "id":"6603db4674ce368028f6974f"
 }
 
 ###search
@@ -181,11 +181,20 @@ POST http://localhost:5000/api/product_details
 Content-Type: application/json
 
 {
-    "product_id": "65ed62eb8c6deb70efeb7d9b",
+    "product_id": "6603db4674ce368028f6974f",
     "image": "huhu",
     "title": "hehe",
     "src": "hehe",
-    "episode": "18"
+    "_state": "Công khai",
+    "episode": "2"
+}
+
+###
+PUT http://localhost:5000/api/product_details/6627cd0e39071f27f007fe34
+Content-Type: application/json
+
+{
+    "_state": "Công khai"
 }
 
 ###

@@ -13,7 +13,10 @@ class ProductServices {
          const options = {};
 
          const products = await Products.find(filter, findDoc, options);
-         const productDetails = await ProductDetails.find({ product_id: pkg.Types.ObjectId(_id) });
+         const productDetails = await ProductDetails.find({
+            product_id: pkg.Types.ObjectId(_id),
+            _state: { $ne: 'Bản nháp' },
+         });
 
          return { success: true, products: products[0] || {}, productDetails };
       } catch (error) {

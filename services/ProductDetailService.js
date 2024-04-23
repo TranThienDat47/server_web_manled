@@ -15,7 +15,10 @@ class ProductDetailService {
 
    async getOfParent(_id) {
       try {
-         const filter = { product_id: pkg.Types.ObjectId(_id) };
+         const filter = {
+            product_id: pkg.Types.ObjectId(_id),
+            _state: { $ne: 'Bản nháp' },
+         };
          const product_details = await ProductDetails.find(filter);
          return { success: true, product_details };
       } catch (error) {

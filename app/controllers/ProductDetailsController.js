@@ -51,12 +51,12 @@ class ProductDetailsController {
    }
 
    async update(req, res) {
-      const { product_id, title, src, image, episode } = req.body;
+      const { product_id, _state, description, title, src, image, episode } = req.body;
       const _id = req.params.id;
 
       try {
          const result = await ProductDetailService.update(
-            { product_id, title, src, image, episode },
+            { product_id, _state, description, title, src, image, episode },
             _id,
          );
 
