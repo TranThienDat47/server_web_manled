@@ -8,6 +8,9 @@ const CommentSchema = new Schema({
       required: true,
       ref: 'users',
    },
+   reply_with: {
+      type: Object,
+   },
    content: {
       type: String,
       required: true,

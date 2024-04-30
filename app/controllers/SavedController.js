@@ -1,56 +1,55 @@
-import FollowService from '../../services/FollowService.js';
+import SavedService from '../../services/SavedService.js';
 
-class FollowController {
-   async getListFollowOfUser(req, res) {
+class SavedController {
+   async getListSavedOfUser(req, res) {
       try {
          const user_id = req.body.user_id;
-         console.log(req.body);
-         const result = await FollowService.getOf({ user_id });
+         const result = await SavedService.getOf({ user_id });
 
          if (!result.success) return res.status(401).json(result);
 
          return res.json(result);
       } catch (error) {
          console.log(error, ' (Row - 9)');
-         res.status(500).json({ success: false, message: 'Get follow failed!' });
+         res.status(500).json({ success: false, message: 'Get saved failed!' });
       }
    }
 
-   async checkIsFollow(req, res) {
+   async checkIsSaved(req, res) {
       const { user_id, ref_id } = req.body;
 
       try {
-         const result = await FollowService.checkFollow({ user_id, ref_id });
+         const result = await SavedService.checkSaved({ user_id, ref_id });
 
          if (!result.success) return res.status(401).json(result);
 
          return res.json(result);
       } catch (error) {
          console.log(error, ' (Row - 9)');
-         res.status(500).json({ success: false, message: 'Get follow failed!' });
+         res.status(500).json({ success: false, message: 'Get saved failed!' });
       }
    }
 
-   async follow(req, res) {
+   async saved(req, res) {
       const { user_id, ref_id } = req.body;
 
       try {
-         const result = await FollowService.add({ user_id, ref_id });
+         const result = await SavedService.add({ user_id, ref_id });
 
          if (!result.success) return res.status(401).json(result);
 
          return res.json(result);
       } catch (error) {
          console.log(error, ' (Row - 29)');
-         res.status(500).json({ success: false, message: 'Follow failed!' });
+         res.status(500).json({ success: false, message: 'Saved failed!' });
       }
    }
 
-   async unfollow(req, res) {
+   async unSaved(req, res) {
       try {
          const { user_id, ref_id } = req.body;
 
-         const result = await FollowService.delete({ user_id, ref_id });
+         const result = await SavedService.delete({ user_id, ref_id });
 
          if (!result.success) return res.status(401).json(result);
 
@@ -58,10 +57,10 @@ class FollowController {
       } catch (error) {
          res.status(500).json({
             success: false,
-            message: 'Get follow failed! (FollowController: Row - 91)',
+            message: 'Get saved failed! (SavedController: Row - 91)',
          });
       }
    }
 }
 
-export default new FollowController();
+export default new SavedController();

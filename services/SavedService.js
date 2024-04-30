@@ -1,23 +1,22 @@
 import pkg from 'mongoose';
 
-import Follows from '../app/models/FollowModel.js';
+import Saveds from '../app/models/SavedModel.js';
 
-class FollowServices {
+class SavedService {
    async getOf({ user_id = null }) {
-      console.log(user_id);
       const filter = {
          user_id: pkg.Types.ObjectId(user_id),
       };
 
       try {
-         const follows = await Follows.find(filter);
-         return { success: true, follows };
+         const saveds = await Saveds.find(filter);
+         return { success: true, saveds: saveds };
       } catch (error) {
          return { success: false, message: error.message };
       }
    }
 
-   async checkFollow(obj = { user_id: '', ref_id: '' }) {
+   async checkSaved(obj = { user_id: '', ref_id: '' }) {
       if (!obj.user_id || obj.user_id === '')
          return { success: false, message: 'user_id is required' };
       if (!obj.ref_id || obj.ref_id === '')
@@ -26,8 +25,8 @@ class FollowServices {
       const filter = { user_id: obj.user_id, ref_id: obj.ref_id };
 
       try {
-         const follows = await Follows.find(filter);
-         return { success: true, isFollow: follows.length > 0 };
+         const saveds = await Saveds.find(filter);
+         return { success: true, isSaved: saveds.length > 0 };
       } catch (error) {
          return { success: false, message: error.message };
       }
@@ -40,13 +39,13 @@ class FollowServices {
          return { success: false, message: 'ref_id is required' };
 
       try {
-         const newFollow = new Follows(obj);
+         const newSaved = new Saveds(obj);
 
-         await newFollow.save();
+         await newSaved.save();
 
-         return { success: true, follows: newFollow };
+         return { success: true, saved: newSaved };
       } catch (error) {
-         return { success: false, message: 'Add follow failed!' };
+         return { success: false, message: 'Add saved failed!' };
       }
    }
 
@@ -59,25 +58,25 @@ class FollowServices {
       try {
          const filter = { user_id: obj.user_id, ref_id: obj.ref_id };
 
-         const deletedFollow = await Follows.findOneAndDelete(filter);
+         const deletedSaved = await Saveds.findOneAndDelete(filter);
 
-         if (!deletedFollow)
+         if (!deletedSaved)
             return {
                success: false,
-               message: 'follows not found or user not authoirised (followsController: Row - 78)',
+               message: 'Saved not found or user not authoirised (savedController: Row - 78)',
             };
 
          return {
             success: true,
-            follows: deletedFollow,
+            saved: deletedSaved,
          };
       } catch (error) {
          return {
             success: false,
-            message: 'Get follows failed! (followsController: Row - 91)',
+            message: 'Get saved failed! (savedController: Row - 91)',
          };
       }
    }
 }
 
-export default new FollowServices();
+export default new SavedService();

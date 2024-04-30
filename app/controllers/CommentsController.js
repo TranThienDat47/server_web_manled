@@ -25,12 +25,12 @@ class CommentsController {
    }
 
    async add(req, res) {
-      const { user_id, content, parent_id, isReply = false } = req.body;
+      const { user_id, content, parent_id, reply_with, isReply = false } = req.body;
 
       if (!parent_id || !user_id || !content)
          return res.status(400).json({ success: false, message: 'Comments is required' });
       else {
-         CommentService.add({ user_id, parent_id, content }, isReply)
+         CommentService.add({ user_id, parent_id, content, reply_with }, isReply)
             .then((result) => {
                const { success, comment, message } = result;
 

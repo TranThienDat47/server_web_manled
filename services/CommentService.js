@@ -36,6 +36,7 @@ class CommentService {
                      replies: 1,
                      createdAt: 1,
                      updatedAt: 1,
+                     reply_with: 1,
                      _name: '$user._name',
                      img: '$user.img',
                   },
@@ -81,6 +82,7 @@ class CommentService {
                         replies: 1,
                         createdAt: 1,
                         updatedAt: 1,
+                        reply_with: 1,
                         _name: '$user._name',
                         img: '$user.img',
                      },
@@ -121,6 +123,7 @@ class CommentService {
                         replies: 1,
                         createdAt: 1,
                         updatedAt: 1,
+                        reply_with: 1,
                         _name: '$user._name',
                         img: '$user.img',
                      },
@@ -161,6 +164,7 @@ class CommentService {
                         replies: 1,
                         createdAt: 1,
                         updatedAt: 1,
+                        reply_with: 1,
                         _name: '$user._name',
                         img: '$user.img',
                      },
@@ -199,6 +203,7 @@ class CommentService {
                      replies: 1,
                      createdAt: 1,
                      updatedAt: 1,
+                     reply_with: 1,
                      _name: '$user._name',
                      img: '$user.img',
                   },
@@ -213,7 +218,10 @@ class CommentService {
       }
    }
 
-   async add(data = { user_id, parent_id, content, likes: 0, replies: 0 }, isReply = false) {
+   async add(
+      data = { user_id, parent_id, content, likes: 0, replies: 0, reply_with: {} },
+      isReply = false,
+   ) {
       const commentDetail = CommentDetail(sanitizeFilter(data));
 
       try {

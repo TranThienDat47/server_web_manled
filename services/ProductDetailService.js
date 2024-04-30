@@ -17,7 +17,7 @@ class ProductDetailService {
       try {
          const filter = {
             product_id: pkg.Types.ObjectId(_id),
-            _state: { $ne: 'Bản nháp' },
+            // _state: { $ne: 'Bản nháp' },
          };
          const product_details = await ProductDetails.find(filter);
          return { success: true, product_details };

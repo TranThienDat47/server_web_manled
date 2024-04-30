@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import pkg from 'mongoose';
 const { Schema } = pkg;
 
-const Followschema = new Schema({
+const Savedchema = new Schema({
    ref_id: {
       type: Schema.Types.ObjectId,
       ref: 'products',
@@ -15,4 +15,4 @@ const Followschema = new Schema({
    },
 });
 
-export default mongoose.model('follows', Followschema);
+export default mongoose.model('saveds', Savedchema);

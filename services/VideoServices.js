@@ -15,8 +15,6 @@ ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
 var filename = './services/demo2.mp4';
 
-var videoIDGlobal = null;
-
 const saveM3U8File = async (videoName, m3u8Data, quality) => {
    try {
       const videoInfo = new VideoInfo({
@@ -69,7 +67,6 @@ async function callback(fileName = '', filePath = '', quality) {
 
          await saveM3U8File(fileName, data, quality).then(async (result) => {
             const lines = data.split('\n');
-            videoIDGlobal = result._id;
 
             const tsFiles = lines.filter((line) => line.endsWith('.ts'));
 
@@ -92,6 +89,8 @@ async function callback(fileName = '', filePath = '', quality) {
 
 class VideoServices {
    async convert_to_m3u8(videoPath = '', videoName = '', productId = '', res) {
+      var videoIDGlobal;
+
       var durationOfVideo = 0;
 
       await ProductDetailService.add({
@@ -100,6 +99,7 @@ class VideoServices {
          description: '',
       }).then((response) => {
          console.log('ok save', response);
+         videoIDGlobal = response.product_details._id;
       });
 
       ffprobe(videoPath, { path: ffprobeStatic.path }, function (err, info) {
@@ -310,8 +310,8 @@ class VideoServices {
                      .outputOptions([
                         '-vf fps=10', // image/s
                         `-r ${tempPic}/${durationOfVideo}`,
-                        '-q:v 255', // image quality 0 -> 255 (0 is best)
-                        '-vf scale=w=144:h=81:force_original_aspect_ratio=decrease',
+                        '-q:v 169', // image quality 0 -> 255 (0 is best)
+                        '-vf scale=w=208:h=117:force_original_aspect_ratio=decrease',
                      ])
                      .output(`${outputFolder}/image/image_%05d.jpg`)
                      .on('end', () => {
