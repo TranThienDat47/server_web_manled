@@ -3,9 +3,9 @@ import FollowService from '../../services/FollowService.js';
 class FollowController {
    async getListFollowOfUser(req, res) {
       try {
-         const user_id = req.body.user_id;
-         console.log(req.body);
-         const result = await FollowService.getOf({ user_id });
+         const { user_id, skip, limit, keySearch, sort } = req.body;
+
+         const result = await FollowService.getOf({ user_id, skip, limit, keySearch, sort });
 
          if (!result.success) return res.status(401).json(result);
 
@@ -48,7 +48,7 @@ class FollowController {
 
    async unfollow(req, res) {
       try {
-         const { user_id, ref_id } = req.body;
+         const { user_id, ref_id } = req.query;
 
          const result = await FollowService.delete({ user_id, ref_id });
 

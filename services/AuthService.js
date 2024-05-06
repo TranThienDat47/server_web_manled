@@ -233,7 +233,7 @@ class AuthService {
 
    async loginWithPassport({
       username = '',
-      img = 'https://drive.google.com/uc?export=view&id=1ZBkx0MXQcO2NSUtCeHfmqiZTkfQlVhxB',
+      img = 'https://drive.google.com/thumbnail?id=1ZBkx0MXQcO2NSUtCeHfmqiZTkfQlVhxB',
       first_name = '',
       last_name = '',
    }) {

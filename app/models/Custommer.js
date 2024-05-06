@@ -13,7 +13,7 @@ const UserSchema = new Schema(
       img: {
          type: String,
          required: true,
-         default: 'https://drive.google.com/uc?export=view&id=1ZBkx0MXQcO2NSUtCeHfmqiZTkfQlVhxB',
+         default: 'https://drive.google.com/thumbnail?id=1ZBkx0MXQcO2NSUtCeHfmqiZTkfQlVhxB',
       },
       username: {
          type: String,
