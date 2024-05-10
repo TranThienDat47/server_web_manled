@@ -5,7 +5,9 @@ import verifyToken from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.get('/', categoriesController.show);
+router.get('/', categoriesController.showAll);
+
+router.post('/get_of', categoriesController.show);
 
 router.post('/', categoriesController.add);
 

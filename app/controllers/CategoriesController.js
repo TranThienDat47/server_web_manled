@@ -4,7 +4,20 @@ class CategoriesController {
    async show(req, res) {
       try {
          const _id = req.body._id;
-         const result = await CategoryService.getAll(_id);
+         const result = await CategoryService.getOf(_id);
+
+         if (!result.success) return res.status(401).json(result);
+
+         return res.json(result);
+      } catch (error) {
+         console.log(error, ' (Row - 9)');
+         res.status(500).json({ success: false, message: 'Get categories failed!' });
+      }
+   }
+
+   async showAll(req, res) {
+      try {
+         const result = await CategoryService.getAll();
 
          if (!result.success) return res.status(401).json(result);
 

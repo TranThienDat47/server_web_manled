@@ -109,6 +109,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzExN
   "_id": "648ae4f5467d3e29a27513c8"
 }
 
+###
+GET http://localhost:5000/api/categories
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzExNzgxYjdiZWJkODJjZGYzOWQxOGUiLCJpYXQiOjE2NjIwOTI1MTh9.4dqOqLZdMY8ek8z6YKtT5OuBgPg_9bhnq6rxv6mK9EY
+
+{
+  "_id": "648ae4f5467d3e29a27513c8"
+}
+
 
 ###
 POST http://localhost:5000/api/categories
@@ -116,8 +125,8 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzExNzgxYjdiZWJkODJjZGYzOWQxOGUiLCJpYXQiOjE2NjIwOTI1MTh9.4dqOqLZdMY8ek8z6YKtT5OuBgPg_9bhnq6rxv6mK9EY
 
 {
-  "title": "Ok la nhe 1",
-  "parent_id": "648ae4f5467d3e29a27513c8",
+  "title": "Kkinh dị",
+  "parent_id": "null",
   "description":"Ok la nhe"
 }
 
@@ -127,9 +136,9 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzExNzgxYjdiZWJkODJjZGYzOWQxOGUiLCJpYXQiOjE2NjIwOTI1MTh9.4dqOqLZdMY8ek8z6YKtT5OuBgPg_9bhnq6rxv6mK9EY
 
 {
-  "title": "Ok la nhe 999",
-  "parentID": "648ae4f5467d3e29a27513c8",
-  "_id": "648ae4f5467d3e29a27513c8",
+  "title": "Kinh dị",
+  "parentID": "null",
+  "_id": "663cf184364d2436a7fe333c",
   "description":"la sao nhi"
 }
 

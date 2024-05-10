@@ -3,10 +3,21 @@ import pkg from 'mongoose';
 import Categories from '../app/models/Categories.js';
 
 class CategoryServices {
-   async getAll(_id) {
+   async getOf(_id) {
       const filter = {
          $or: [{ _id: pkg.Types.ObjectId(_id) }, { parentID: pkg.Types.ObjectId(_id) }],
       };
+
+      try {
+         const categories = await Categories.find(filter);
+         return { success: true, categories };
+      } catch (error) {
+         return { success: false, message: error.message };
+      }
+   }
+
+   async getAll(_id) {
+      const filter = { parentID: null };
 
       try {
          const categories = await Categories.find(filter);

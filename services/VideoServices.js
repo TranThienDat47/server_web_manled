@@ -15,6 +15,8 @@ ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
 var filename = './services/demo2.mp4';
 
+var tempVideoRef = [];
+
 const saveM3U8File = async (videoName, m3u8Data, quality) => {
    try {
       const videoInfo = new VideoInfo({
@@ -68,6 +70,8 @@ async function callback(fileName = '', filePath = '', quality) {
          await saveM3U8File(fileName, data, quality).then(async (result) => {
             const lines = data.split('\n');
 
+            tempVideoRef = [...tempVideoRef, { _id: result._id, quality }];
+
             const tsFiles = lines.filter((line) => line.endsWith('.ts'));
 
             await Promise.all(
@@ -98,7 +102,6 @@ class VideoServices {
          title: videoName,
          description: '',
       }).then((response) => {
-         console.log('ok save', response);
          videoIDGlobal = response.product_details._id;
       });
 
@@ -128,7 +131,7 @@ class VideoServices {
                reject();
             }
          })
-            .then(async (ohno) => {
+            .then(async () => {
                fs.mkdirSync(outputFolder + '/360', { recursive: true });
 
                return new Promise((resolve, reject) => {
@@ -155,12 +158,6 @@ class VideoServices {
                      ])
                      .on('progress', (progress) => {
                         // durationOfVideo = timemarkToSeconds(progress.timemark);
-
-                        console.log(
-                           progress.timemark,
-                           durationOfVideo,
-                           progress.timemark / durationOfVideo,
-                        );
 
                         res.write(
                            JSON.stringify({
@@ -252,7 +249,7 @@ class VideoServices {
                               '-b:v 2800k',
                               '-maxrate 2996k',
                               '-bufsize 4200k',
-                              '-hls_time ',
+                              '-hls_time 10',
                               `-hls_segment_filename ${
                                  outputFolder + '/720'
                               }/${timestamp}_720p_%03d.ts`,
@@ -275,7 +272,8 @@ class VideoServices {
                               callback(`${timestamp}_720.m3u8`, outputFolder + '/720', '720p');
                               resolve();
                            })
-                           .on('error', () => {
+                           .on('error', (error) => {
+                              console.log(error);
                               resolve();
                            })
                            .run();
@@ -374,6 +372,13 @@ class VideoServices {
                         console.error('Error saving thumbnails:', error);
                      });
                });
+            })
+            .then(() => {
+               ProductDetailService.update({ video_ref: tempVideoRef }, videoIDGlobal).then(
+                  (res) => {
+                     console.log(res);
+                  },
+               );
             });
       } catch (error) {}
    }
