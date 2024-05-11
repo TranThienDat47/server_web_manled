@@ -20,7 +20,7 @@ const options = {
 const connectDB = async () => {
    try {
       await mongoose.connect(
-         `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.f8gvn2w.mongodb.net/test`,
+         `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.rdlf0om.mongodb.net/test`,
          {
             useNewUrlParser: true,
             useUnifiedTopology: true,

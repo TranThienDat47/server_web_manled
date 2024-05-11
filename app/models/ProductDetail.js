@@ -30,7 +30,7 @@ const ProductDetailSchema = new Schema(
       },
       _state: {
          type: String,
-         default: 'Bản nháp',
+         default: 'Công khai',
       },
       views: {
          type: Number,
