@@ -84,7 +84,7 @@ Content-Type: application/json
 }
 
 ###search
-GET http://localhost:5000/api/products/search?skip=0&limit=null$key=&recently=true
+GET http://localhost:5000/api/products/search?skip=0&limit=10&key=&recently=true
 
 ###
 PUT http://localhost:5000/api/products/64e995b97c388de0ba6affc8

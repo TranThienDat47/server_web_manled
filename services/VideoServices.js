@@ -206,7 +206,7 @@ class VideoServices {
                               '-f hls',
                            ])
                            .on('progress', (progress) => {
-                              // durationOfVideo = timemarkToSeconds(progress.timemark);
+                              // durationOfVideo = timemrkToSeconds(progress.timemark);
 
                               res.write(
                                  JSON.stringify({
@@ -223,7 +223,8 @@ class VideoServices {
                               callback(`${timestamp}_480.m3u8`, outputFolder + '/480', '480p');
                               resolve();
                            })
-                           .on('error', () => {
+                           .on('error', (error) => {
+                              console.log('480p -----', error);
                               resolve();
                            })
                            .run();
