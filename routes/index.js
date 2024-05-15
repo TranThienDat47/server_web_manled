@@ -1,27 +1,29 @@
 import authRouter from './auth.js';
+import savedRouter from './saved.js';
 import videoRouter from './video.js';
+import followRouter from './follows.js';
 import productsRouter from './products.js';
 import commentsRouter from './comments.js';
 import categoriesRouter from './categories.js';
-import followRouter from './follows.js';
-import savedRouter from './saved.js';
+import seenMovieRouter from './seenMovies.js';
 import notificationRouter from './notifications.js';
+import seeLaterMovieRouter from './seeLaterMovies.js';
 import productDetailsRouter from './productDetails.js';
 import globalNotificationRouter from './globalNotifications.js';
 import passportGoogleOauthRouter from './passportGoogleOauth.js';
-
 const route = (app) => {
-   app.use('/api/auth', authRouter);
-   app.use('/api/video', videoRouter);
-   app.use('/api/saved', savedRouter);
-   app.use('/api/follow', followRouter);
+   app.use('/api/global_notification', globalNotificationRouter);
+   app.use('/api/auth/google', passportGoogleOauthRouter);
+   app.use('/api/product_details', productDetailsRouter);
+   app.use('/api/seeLaterMovie', seeLaterMovieRouter);
+   app.use('/api/notification', notificationRouter);
+   app.use('/api/categories', categoriesRouter);
+   app.use('/api/seenMovie', seenMovieRouter);
    app.use('/api/products', productsRouter);
    app.use('/api/comments', commentsRouter);
-   app.use('/api/categories', categoriesRouter);
-   app.use('/api/auth/google', passportGoogleOauthRouter);
-   app.use('/api/notification', notificationRouter);
-   app.use('/api/product_details', productDetailsRouter);
-   app.use('/api/global_notification', globalNotificationRouter);
+   app.use('/api/follow', followRouter);
+   app.use('/api/saved', savedRouter);
+   app.use('/api/video', videoRouter);
+   app.use('/api/auth', authRouter);
 };
-
 export default route;

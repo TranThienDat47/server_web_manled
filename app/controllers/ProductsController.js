@@ -18,6 +18,23 @@ class ProductsController {
       }
    }
 
+   async getProductOfCategory(req, res) {
+      const { categories_id = 0, skip, limit, recently = false } = req.query;
+
+      try {
+         await ProductService.getProductOfCategory({ categories_id, skip, limit, recently }).then(
+            (result) => {
+               if (!result.success) return res.status(401).json(result);
+
+               return res.json(result);
+            },
+         );
+      } catch (error) {
+         console.log(error, ' (Row - 9)');
+         return res.status(500).json({ success: false, message: 'Get products failed!', error });
+      }
+   }
+
    async search(req, res) {
       const { skip, limit, key, recently = false } = req.query;
 

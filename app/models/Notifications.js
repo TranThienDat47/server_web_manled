@@ -9,6 +9,11 @@ const Notificationchema = new Schema(
          ref: 'categories',
          required: true,
       },
+      user_send_id: {
+         type: pkg.Schema.Types.ObjectId,
+         ref: 'users',
+         required: true,
+      },
       user_id: {
          type: pkg.Schema.Types.ObjectId,
          ref: 'users',

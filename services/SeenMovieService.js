@@ -1,19 +1,9 @@
 import pkg from 'mongoose';
 
-import Follows from '../app/models/FollowModel.js';
 import { standardized } from '../helpers/utils.js';
+import SeenMovieModel from '../app/models/SeenMovieModel.js';
 
-class FollowServices {
-   async getCountFollowOfProduct({ product_id }) {
-      try {
-         const count = await Follows.countDocuments({ ref_id: pkg.Types.ObjectId(product_id) });
-
-         return { success: true, count };
-      } catch (error) {
-         return { success: false, message: error.message };
-      }
-   }
-
+class SeenMovieService {
    async getOf({
       user_id = null,
       skip = 0,
@@ -36,7 +26,7 @@ class FollowServices {
       }
 
       try {
-         const follows = await Follows.aggregate([
+         const seenMovies = await SeenMovieModel.aggregate([
             { $match: { user_id: pkg.Types.ObjectId(user_id) } },
             {
                $lookup: {
@@ -74,20 +64,20 @@ class FollowServices {
                   anotherName: '$product.anotherName',
                   view: '$product.view',
                   episodes: '$product.episodes',
-                  createdAt: '$product.createdAt',
+                  updatedAt: '$product.updatedAt',
                },
             },
-            { $sort: { createdAt: parseInt(sort) } },
+            { $sort: { updatedAt: parseInt(sort) } },
             { $skip: +options.skip },
             { $limit: +options?.limit },
          ]);
-         return { success: true, follows };
+         return { success: true, seenMovies };
       } catch (error) {
          return { success: false, message: error.message };
       }
    }
 
-   async checkFollow(obj = { user_id: '', ref_id: '' }) {
+   async checkSeenMovie(obj = { user_id: '', ref_id: '' }) {
       if (!obj.user_id || obj.user_id === '')
          return { success: false, message: 'user_id is required' };
       if (!obj.ref_id || obj.ref_id === '')
@@ -96,8 +86,8 @@ class FollowServices {
       const filter = { user_id: obj.user_id, ref_id: obj.ref_id };
 
       try {
-         const follows = await Follows.find(filter);
-         return { success: true, isFollow: follows.length > 0 };
+         const seenMovies = await SeenMovieModel.find(filter);
+         return { success: true, isSeenMovie: seenMovies.length > 0 };
       } catch (error) {
          return { success: false, message: error.message };
       }
@@ -110,13 +100,15 @@ class FollowServices {
          return { success: false, message: 'ref_id is required' };
 
       try {
-         const newFollow = new Follows(obj);
+         let seenMovie = await SeenMovieModel.findOneAndUpdate(
+            { user_id: obj.user_id, ref_id: obj.ref_id },
+            { ...obj, updatedAt: Date.now() },
+            { upsert: true, new: true },
+         );
 
-         await newFollow.save();
-
-         return { success: true, follows: newFollow };
+         return { success: true, seenMovies: seenMovie };
       } catch (error) {
-         return { success: false, message: 'Add follow failed!' };
+         return { success: false, message: 'Add seenMovie failed! ' + error.message };
       }
    }
 
@@ -129,25 +121,26 @@ class FollowServices {
       try {
          const filter = { user_id: obj.user_id, ref_id: obj.ref_id };
 
-         const deletedFollow = await Follows.findOneAndDelete(filter);
+         const deletedSeenMovie = await SeenMovieModel.findOneAndDelete(filter);
 
-         if (!deletedFollow)
+         if (!deletedSeenMovie)
             return {
                success: false,
-               message: 'follows not found or user not authoirised (followsController: Row - 78)',
+               message:
+                  'seenMovies not found or user not authoirised (seenMoviesController: Row - 78)',
             };
 
          return {
             success: true,
-            follows: deletedFollow,
+            seenMovies: deletedSeenMovie,
          };
       } catch (error) {
          return {
             success: false,
-            message: 'Get follows failed! (followsController: Row - 91)',
+            message: 'Get seenMovies failed! (seenMoviesController: Row - 91)',
          };
       }
    }
 }
 
-export default new FollowServices();
+export default new SeenMovieService();

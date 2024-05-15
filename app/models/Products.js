@@ -59,7 +59,7 @@ const ProductsSchema = new Schema(
          type: String,
       },
       categories: {
-         type: [Object],
+         type: [Object], //[{_id, title}]
       },
       keySearch: {
          type: String,

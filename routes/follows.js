@@ -5,6 +5,8 @@ import verifyToken from '../middleware/auth.js';
 
 const router = express.Router();
 
+router.get('/count_follow/:product_id', followController.getCountFollowOfProduct);
+
 router.post('/check_follow', followController.checkIsFollow);
 
 router.post('/list_follow', followController.getListFollowOfUser);

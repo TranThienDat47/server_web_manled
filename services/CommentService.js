@@ -7,6 +7,42 @@ import LikeComments from '../app/models/LikeComments.js';
 const { sanitizeFilter } = pkg;
 
 class CommentService {
+   async getCountCommentOfProduct(parent_id) {
+      try {
+         const objectId = pkg.Types.ObjectId(parent_id);
+
+         const result = await Comments.aggregate([
+            { $match: { parent_id: objectId } },
+            {
+               $project: {
+                  totalReplies: { $sum: '$comment_details.replies' },
+                  counts: 1,
+               },
+            },
+            {
+               $group: {
+                  _id: null,
+                  totalComments: { $sum: '$counts' },
+                  totalReplies: { $sum: '$totalReplies' },
+               },
+            },
+            {
+               $project: {
+                  total: {
+                     $add: ['$totalComments', '$totalReplies'],
+                  },
+               },
+            },
+         ]);
+
+         const count = result.length > 0 ? result[0].total : 0;
+
+         return { success: true, count };
+      } catch (error) {
+         return { success: false, count: 0, error: error.message };
+      }
+   }
+
    async get(parent_id) {
       try {
          const comments = await Comments.aggregate([
@@ -449,25 +485,24 @@ class CommentService {
          const checkUser = await this.checkUserLikeComment({ comment_id, user_id });
 
          if (checkUser.success && !checkUser.likeComment) {
-            const newLikeComment = new LikeComments({ comment_id, user_id });
+            const newLikeComment = await LikeComments.findOneAndUpdate(
+               { comment_id, user_id },
+               { $set: { comment_id, user_id } },
+               { upsert: true, new: true },
+            );
 
-            const addNewLikeComment = await newLikeComment
-               .save()
-               .then(async () => {
-                  await this.addLikeComment(comment_id, 1);
-               })
-               .catch((error) => {});
+            await this.addLikeComment(comment_id, 1);
 
             return {
                success: true,
                likeComment: newLikeComment,
-               message: 'successfully added',
+               message: 'Successfully added',
             };
          } else {
             return {
                success: false,
                likeComment: null,
-               message: 'users liked comment',
+               message: 'Users liked comment',
             };
          }
       } catch (error) {

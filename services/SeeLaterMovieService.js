@@ -1,19 +1,9 @@
 import pkg from 'mongoose';
 
-import Follows from '../app/models/FollowModel.js';
+import SeeLaterMovies from '../app/models/SeeLaterMovieModel.js';
 import { standardized } from '../helpers/utils.js';
 
-class FollowServices {
-   async getCountFollowOfProduct({ product_id }) {
-      try {
-         const count = await Follows.countDocuments({ ref_id: pkg.Types.ObjectId(product_id) });
-
-         return { success: true, count };
-      } catch (error) {
-         return { success: false, message: error.message };
-      }
-   }
-
+class SeeLaterMovieServices {
    async getOf({
       user_id = null,
       skip = 0,
@@ -36,7 +26,7 @@ class FollowServices {
       }
 
       try {
-         const follows = await Follows.aggregate([
+         const seeLaterMovies = await SeeLaterMovies.aggregate([
             { $match: { user_id: pkg.Types.ObjectId(user_id) } },
             {
                $lookup: {
@@ -81,13 +71,13 @@ class FollowServices {
             { $skip: +options.skip },
             { $limit: +options?.limit },
          ]);
-         return { success: true, follows };
+         return { success: true, seeLaterMovies };
       } catch (error) {
          return { success: false, message: error.message };
       }
    }
 
-   async checkFollow(obj = { user_id: '', ref_id: '' }) {
+   async checkSeeLaterMovie(obj = { user_id: '', ref_id: '' }) {
       if (!obj.user_id || obj.user_id === '')
          return { success: false, message: 'user_id is required' };
       if (!obj.ref_id || obj.ref_id === '')
@@ -96,8 +86,8 @@ class FollowServices {
       const filter = { user_id: obj.user_id, ref_id: obj.ref_id };
 
       try {
-         const follows = await Follows.find(filter);
-         return { success: true, isFollow: follows.length > 0 };
+         const seeLaterMovies = await SeeLaterMovies.find(filter);
+         return { success: true, isSeeLaterMovie: seeLaterMovies.length > 0 };
       } catch (error) {
          return { success: false, message: error.message };
       }
@@ -110,13 +100,13 @@ class FollowServices {
          return { success: false, message: 'ref_id is required' };
 
       try {
-         const newFollow = new Follows(obj);
+         const newSeeLaterMovie = new SeeLaterMovies(obj);
 
-         await newFollow.save();
+         await newSeeLaterMovie.save();
 
-         return { success: true, follows: newFollow };
+         return { success: true, seeLaterMovies: newSeeLaterMovie };
       } catch (error) {
-         return { success: false, message: 'Add follow failed!' };
+         return { success: false, message: 'Add seeLaterMovie failed!' };
       }
    }
 
@@ -129,25 +119,26 @@ class FollowServices {
       try {
          const filter = { user_id: obj.user_id, ref_id: obj.ref_id };
 
-         const deletedFollow = await Follows.findOneAndDelete(filter);
+         const deletedSeeLaterMovie = await SeeLaterMovies.findOneAndDelete(filter);
 
-         if (!deletedFollow)
+         if (!deletedSeeLaterMovie)
             return {
                success: false,
-               message: 'follows not found or user not authoirised (followsController: Row - 78)',
+               message:
+                  'seeLaterMovies not found or user not authoirised (seeLaterMoviesController: Row - 78)',
             };
 
          return {
             success: true,
-            follows: deletedFollow,
+            seeLaterMovies: deletedSeeLaterMovie,
          };
       } catch (error) {
          return {
             success: false,
-            message: 'Get follows failed! (followsController: Row - 91)',
+            message: 'Get seeLaterMovies failed! (seeLaterMoviesController: Row - 91)',
          };
       }
    }
 }
 
-export default new FollowServices();
+export default new SeeLaterMovieServices();

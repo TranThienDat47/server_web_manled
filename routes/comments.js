@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.get('/', commentsController.get);
 
+router.get('/:parent_id', commentsController.getCountCommentOfRoot);
+
 router.post('/', verifyToken, commentsController.add);
 
 router.post('/check_user_like_comment', verifyToken, commentsController.checkUserLikeComment);

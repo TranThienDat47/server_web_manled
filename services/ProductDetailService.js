@@ -1,6 +1,7 @@
 import pkg from 'mongoose';
 
 import ProductDetails from '../app/models/ProductDetail.js';
+import LikeProductDetail from '../app/models/LikeProductDetail.js';
 
 class ProductDetailService {
    async get(_id) {
@@ -35,6 +36,57 @@ class ProductDetailService {
          await product_details.save();
 
          return { success: true, product_details };
+      } catch (error) {
+         return { success: false, message: error.message };
+      }
+   }
+
+   async like({ parrent_id, user_id }) {
+      try {
+         const filter = { parrent_id, user_id };
+         const update = { parrent_id, user_id };
+         const options = { upsert: true, new: false };
+
+         const existingLike = await LikeProductDetail.findOne(filter);
+
+         if (existingLike) {
+            return { success: false, message: 'Like already exists for this user and parent_id' };
+         }
+
+         const likeModel = await LikeProductDetail.findOneAndUpdate(filter, update, options);
+
+         return { success: true, likeModel };
+      } catch (error) {
+         return { success: false, message: error.message };
+      }
+   }
+
+   async dislike({ parrent_id, user_id }) {
+      try {
+         const filter = { parrent_id, user_id };
+
+         const dislikeModel = await LikeProductDetail.findOneAndDelete(filter);
+
+         if (!dislikeModel) {
+            return { success: false, message: 'Không tìm thấy bản ghi để xóa.' };
+         }
+
+         return { success: true, dislikeModel };
+      } catch (error) {
+         return { success: false, message: error.message };
+      }
+   }
+
+   async checkUserLike({ parrent_id, user_id }) {
+      try {
+         const filter = { parrent_id, user_id };
+
+         const existingLike = await LikeProductDetail.findOne(filter);
+
+         if (existingLike) {
+            return { success: true, isLike: true };
+         }
+         return { success: true, isLike: false };
       } catch (error) {
          return { success: false, message: error.message };
       }

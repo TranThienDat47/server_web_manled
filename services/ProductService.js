@@ -40,6 +40,35 @@ class ProductServices {
       }
    }
 
+   async getProductOfCategory({
+      categories_id,
+      skip = 0,
+      limit = Number.MAX_SAFE_INTEGER,
+      recently,
+   }) {
+      try {
+         const options = { skip, limit };
+         const filter = {};
+
+         if (options.limit === 'null' || !options.limit) delete options.limit;
+
+         if (recently) options.sort = { createdAt: -1 };
+         else options.sort = { createdAt: 1 };
+
+         if (categories_id) {
+            filter.categories = { $elemMatch: { _id: categories_id } };
+         }
+
+         console.log(filter);
+
+         const products = await Products.find(filter, {}, options);
+
+         return { success: true, products };
+      } catch (error) {
+         return { success: false, message: error.message };
+      }
+   }
+
    async add(
       obj = {
          _name,

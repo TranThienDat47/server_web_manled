@@ -8,7 +8,7 @@ class NotificationService {
             limit,
          };
 
-         if (valueSort !== null) option.sort = { timestamps: valueSort };
+         if (valueSort !== null) option.sort = { createdAt: valueSort };
 
          const notification = await Notifications.find(filter, {}, option);
 
@@ -18,11 +18,32 @@ class NotificationService {
       }
    }
 
-   async add(obj = { ref_id, user_id, title, content }) {
-      if (!obj.ref_id.trim() || !obj.user_id.trim() || !obj.title.trim() || !obj.content.trim())
+   async countUnreadNotifications(user_id = null) {
+      try {
+         const filter = {
+            user_id: user_id,
+            read: false,
+         };
+
+         const count = await Notifications.countDocuments(filter);
+
+         return { success: true, count };
+      } catch (error) {
+         return { success: false, message: error.message };
+      }
+   }
+
+   async add(obj = { ref_id, user_id, user_send_id, title, content }) {
+      if (
+         !obj.ref_id.trim() ||
+         !obj.user_id.trim() ||
+         !obj.user_send_id.trim() ||
+         !obj.title.trim() ||
+         !obj.content.trim()
+      )
          return {
             success: false,
-            message: "'ref_id', 'user_id', 'title' and 'content' are required!",
+            message: "'ref_id', 'user_id', 'user_send_id', 'title' and 'content' are required!",
          };
 
       try {
@@ -31,6 +52,25 @@ class NotificationService {
          await notification.save();
 
          return { success: true, notification };
+      } catch (error) {
+         return { success: false, message: error.message };
+      }
+   }
+
+   async read(temp = []) {
+      try {
+         if (!!temp.length) {
+            await Promise.all(
+               temp.map(async (element) => {
+                  await Notifications.findOneAndUpdate({ _id: element._id }, { read: true }).then(
+                     (res) => {},
+                  );
+               }),
+            );
+
+            return { success: true };
+         }
+         return { success: true };
       } catch (error) {
          return { success: false, message: error.message };
       }

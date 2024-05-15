@@ -1,6 +1,21 @@
 import FollowService from '../../services/FollowService.js';
 
 class FollowController {
+   async getCountFollowOfProduct(req, res) {
+      try {
+         const { product_id } = req.params;
+
+         const result = await FollowService.getCountFollowOfProduct({ product_id });
+
+         if (!result.success) return res.status(401).json(result);
+
+         return res.json(result);
+      } catch (error) {
+         console.log(error, ' (Row - 9)');
+         res.status(500).json({ success: false, message: 'Get follow failed!' });
+      }
+   }
+
    async getListFollowOfUser(req, res) {
       try {
          const { user_id, skip, limit, keySearch, sort } = req.body;

@@ -32,20 +32,15 @@ const socketio = new Server(server, {
 });
 
 socketio.on('connection', (socket) => {
-   console.log('A user connected');
-
+   console.log('user connect');
    socket.on('comment', (msg) => {
-      // emit the comment to all connected clients
       socketio.emit('comment', msg);
    });
    socket.on('comment_reply', (msg) => {
-      // emit the comment to all connected clients
       socketio.emit('comment_reply', msg);
    });
 
-   socket.on('disconnect', () => {
-      console.log('A user disconnected');
-   });
+   socket.on('disconnect', () => {});
 });
 
 app.listen(PORT, () => console.log(`Server started on ${PORT}`));

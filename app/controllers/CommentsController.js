@@ -1,6 +1,29 @@
 import CommentService from '../../services/CommentService.js';
 
 class CommentsController {
+   async getCountCommentOfRoot(req, res) {
+      const { parent_id } = req.params;
+
+      CommentService.getCountCommentOfProduct(parent_id)
+         .then((result) => {
+            const { success, count } = result;
+
+            if (!success)
+               return res.status(401).json({
+                  success: false,
+                  message: 'Get count comments failed!',
+               });
+
+            return res.json({ success: true, count });
+         })
+         .catch((err) => {
+            return res.status(401).json({
+               success: false,
+               message: 'Get count comments failed!',
+            });
+         });
+   }
+
    async get(req, res) {
       const { parent_id, skip, limit, sort } = req.query;
 

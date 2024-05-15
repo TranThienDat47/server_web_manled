@@ -5,7 +5,11 @@ import verifyToken from '../middleware/auth.js';
 
 const router = express.Router();
 
+router.get('/:user_id', notificationController.readCount);
+
 router.post('/', notificationController.show);
+
+router.post('/read', notificationController.read);
 
 router.post('/like_comment', notificationController.likeComment);
 

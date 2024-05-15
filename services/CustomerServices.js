@@ -1,6 +1,6 @@
 import pkg from 'mongoose';
 
-import Custommer from '../app/models/Custommer';
+import Custommer from '../app/models/Custommer.js';
 
 class CustomerServices {
    async getOne(_id) {
