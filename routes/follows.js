@@ -7,12 +7,12 @@ const router = express.Router();
 
 router.get('/count_follow/:product_id', followController.getCountFollowOfProduct);
 
-router.post('/check_follow', followController.checkIsFollow);
+router.post('/check_follow', verifyToken, followController.checkIsFollow);
 
 router.post('/list_follow', followController.getListFollowOfUser);
 
-router.post('/follow', followController.follow);
+router.post('/follow', verifyToken, followController.follow);
 
-router.delete('/unfollow', followController.unfollow);
+router.delete('/unfollow', verifyToken, followController.unfollow);
 
 export default router;

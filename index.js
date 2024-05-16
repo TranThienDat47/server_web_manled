@@ -27,7 +27,8 @@ const PORT_SOCKET_IO = process.env.PORT_SOCKET_IO || 3006;
 const server = createServer(app);
 const socketio = new Server(server, {
    cors: {
-      origin: '*',
+      origins: '*:*',
+      methods: ['GET', 'POST'],
    },
 });
 
@@ -40,7 +41,9 @@ socketio.on('connection', (socket) => {
       socketio.emit('comment_reply', msg);
    });
 
-   socket.on('disconnect', () => {});
+   socket.on('disconnect', () => {
+      console.log('disconnect');
+   });
 });
 
 app.listen(PORT, () => console.log(`Server started on ${PORT}`));

@@ -13,8 +13,6 @@ import ProductDetailService from './ProductDetailService.js';
 
 ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
-var filename = './services/demo2.mp4';
-
 var tempVideoRef = [];
 
 const saveM3U8File = async (videoName, m3u8Data, quality) => {
@@ -281,15 +279,19 @@ class VideoServices {
                   });
             })
             .then(() => {
-               var tempPic = 300;
+               let tempPic = 369;
 
-               if (durationOfVideo / 300 > 1)
-                  tempPic = tempPic + ((durationOfVideo - 300) / 60) * 8;
-               else if (durationOfVideo < 60) {
+               if (durationOfVideo < 60) {
                   tempPic = durationOfVideo * 2;
-               } else if (durationOfVideo < 300) tempPic = durationOfVideo;
+               } else if (durationOfVideo < 369) {
+                  tempPic = durationOfVideo;
+               } else if (durationOfVideo / 369 > 1) {
+                  tempPic = 369 + Math.floor((durationOfVideo - 369) / 60) * 8;
+               }
 
                fs.mkdirSync(outputFolder + '/image', { recursive: true });
+
+               console.log(tempPic, durationOfVideo, `${tempPic}/${durationOfVideo}`);
 
                const stepTime = tempPic / durationOfVideo;
 
@@ -306,10 +308,10 @@ class VideoServices {
                         res.flushHeaders();
                      })
                      .outputOptions([
-                        '-vf fps=10', // image/s
-                        `-r ${tempPic}/${durationOfVideo}`,
-                        '-q:v 169', // image quality 0 -> 255 (0 is best)
-                        '-vf scale=w=208:h=117:force_original_aspect_ratio=decrease',
+                        `-vf fps=1`, // image/s
+                        `-r ${stepTime}`,
+                        '-q:v 196', // image quality 0 -> 255 (0 is best)
+                        '-vf scale=w=288:h=162:force_original_aspect_ratio=decrease',
                      ])
                      .output(`${outputFolder}/image/image_%05d.jpg`)
                      .on('end', () => {
@@ -324,7 +326,7 @@ class VideoServices {
                      .run();
                });
             })
-            .then((resultTime) => {
+            .then(async (resultTime) => {
                fs.readdir(`${outputFolder}/image/`, async (err, files) => {
                   if (err) {
                      console.error('Lỗi khi đọc thư mục:', err);
@@ -350,7 +352,7 @@ class VideoServices {
                                  try {
                                     await saveThumbnail(
                                        videoIDGlobal,
-                                       i * +resultTime,
+                                       i * (1 / +resultTime),
                                        new Buffer.from(data, 'base64').toString('base64'),
                                     );
                                     resolve();
@@ -361,6 +363,15 @@ class VideoServices {
                            });
                         }),
                      );
+
+                     res.write(
+                        JSON.stringify({
+                           curStep: 4,
+                           percent: i / countFile,
+                           maxStep: 4,
+                        }),
+                     );
+                     res.flushHeaders();
                   }
 
                   return Promise.all(promises)
@@ -377,6 +388,8 @@ class VideoServices {
                ProductDetailService.update({ video_ref: tempVideoRef }, videoIDGlobal).then(
                   (res) => {
                      console.log(res);
+
+                     tempVideoRef = [];
                   },
                );
             });

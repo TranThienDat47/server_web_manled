@@ -5,11 +5,11 @@ import verifyToken from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.get('/', gloabalNotificationController.getWithCustomer);
+router.get('/', verifyToken, gloabalNotificationController.getWithCustomer);
 
-router.post('/add_all', gloabalNotificationController.addAll);
+router.post('/add_all', verifyToken, gloabalNotificationController.addAll);
 
-router.post('/add_many', gloabalNotificationController.addMany);
+router.post('/add_many', verifyToken, gloabalNotificationController.addMany);
 
 // router.put('/', gloabalNotificationController.update);
 

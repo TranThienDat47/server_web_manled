@@ -5,12 +5,12 @@ import verifyToken from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.post('/check_seeLaterMovie', seeLaterMovieController.checkIsSeeLaterMovie);
+router.post('/check_seeLaterMovie', verifyToken, seeLaterMovieController.checkIsSeeLaterMovie);
 
-router.post('/list_seeLaterMovie', seeLaterMovieController.getListSeeLaterMovieOfUser);
+router.post('/list_seeLaterMovie', verifyToken, seeLaterMovieController.getListSeeLaterMovieOfUser);
 
-router.post('/seeLaterMovie', seeLaterMovieController.seeLaterMovie);
+router.post('/seeLaterMovie', verifyToken, seeLaterMovieController.seeLaterMovie);
 
-router.delete('/unseeLaterMovie', seeLaterMovieController.unseeLaterMovie);
+router.delete('/unseeLaterMovie', verifyToken, seeLaterMovieController.unseeLaterMovie);
 
 export default router;

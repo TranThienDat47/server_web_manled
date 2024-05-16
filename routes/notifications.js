@@ -5,18 +5,18 @@ import verifyToken from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.get('/:user_id', notificationController.readCount);
+router.get('/:user_id', verifyToken, notificationController.readCount);
 
-router.post('/', notificationController.show);
+router.post('/', verifyToken, notificationController.show);
 
-router.post('/read', notificationController.read);
+router.post('/read', verifyToken, notificationController.read);
 
-router.post('/like_comment', notificationController.likeComment);
+router.post('/like_comment', verifyToken, notificationController.likeComment);
 
-router.post('/reply_comment', notificationController.replyComment);
+router.post('/reply_comment', verifyToken, notificationController.replyComment);
 
 // router.put('/', notificationController.update);
 
-router.delete('/', notificationController.delete);
+router.delete('/', verifyToken, notificationController.delete);
 
 export default router;

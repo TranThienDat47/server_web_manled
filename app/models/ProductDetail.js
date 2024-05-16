@@ -24,6 +24,7 @@ const ProductDetailSchema = new Schema(
       },
       episode: {
          type: String,
+         default: 'Full',
       },
       child_restriction: {
          type: Boolean,

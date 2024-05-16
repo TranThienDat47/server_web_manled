@@ -5,12 +5,12 @@ import verifyToken from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.post('/check_saved', savedController.checkIsSaved);
+router.post('/check_saved', verifyToken, savedController.checkIsSaved);
 
-router.post('/list_saved', savedController.getListSavedOfUser);
+router.post('/list_saved', verifyToken, savedController.getListSavedOfUser);
 
-router.post('/saved', savedController.saved);
+router.post('/saved', verifyToken, savedController.saved);
 
-router.delete('/un_saved', savedController.unSaved);
+router.delete('/un_saved', verifyToken, savedController.unSaved);
 
 export default router;
