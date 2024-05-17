@@ -68,6 +68,40 @@ class ProductsController {
       }
    }
 
+   async searchRecommend(req, res) {
+      const { skip, limit, key, recently = false } = req.query;
+
+      var _key = '',
+         _key_more = '';
+
+      if (key) {
+         _key = new RegExp(key);
+         _key_more = new RegExp(standardized(key));
+      }
+
+      try {
+         const results = await ProductService.search(
+            skip,
+            limit,
+            {
+               currentEpisodes: { $ne: '??' },
+               $or: [
+                  { _name: { $regex: _key, $options: 'i' } },
+                  { anotherName: { $regex: _key, $options: 'i' } },
+                  { keySearch: { $regex: _key_more, $options: 'i' } },
+               ],
+            },
+            recently,
+         );
+
+         if (results.success) return res.json(results);
+
+         return res.status(401).json(results);
+      } catch (error) {
+         return res.status(500).json({ success: false, message: error.message });
+      }
+   }
+
    async add(req, res) {
       var {
          _name,

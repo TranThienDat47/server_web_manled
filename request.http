@@ -58,19 +58,20 @@ POST http://localhost:5000/api/products
 Content-Type: application/json
 
 {
-  "_name":"Đấu la đại lục 6",
-  "anotherName":"Đấu la đại lục",
-  "description":"Mở đầu câu chuyện xuất hiện một nam nhân tên Đường Tam bị Đường Môn truy sát, là tông môn nổi tiếng với các loại cơ quan ám khí nhất là “Phật nộ đường liên”. Thân là thiên tài ngàn năm có một nhưng vì chỉ có thân phận ngoại môn đồ.",
-  "img":"https://upload.wikimedia.org/wikipedia/vi/a/a2/Poster_%C4%90%E1%BA%A5u_La_%C4%90%E1%BA%A1i_L%E1%BB%A5c.jpg",
-  "background": "https://hosonhanvat.vn/wp-content/uploads/2020/03/Dai-La-Dai-Luc-full-tron-bo.jpeg",
+  "_name": "Lúc đó tôi đã chuyển sinh thành Slime: Giấc mộng Coleus",
+  "anotherName": "Tensei Shitara Suraimu Datta Ken",
+  "description": "Satoru Mikami vốn đang có cuộc sống bình lặng thì bị một gã côn đồ đâm chết trên phố. Anh kết thúc cuộc đời ở tuổi 37. Bỗng nhiên khi lấy lại ý thức, anh không thể nghe, cũng không thể nhìn thấy gì. Anh phát hiện ra mình đã chuyển sinh thành một con Slime.",
+  "img": "https://cdn.animevietsub.fun/data/poster/2024/03/30/animevsub-l8vf51JRem.jpg",
+  "background": "https://images.fptplay.net/media/OTT/VOD/2023/03/16/chuyen-sinh-thanh-slime-moi-lien-ket-do-tham-fpt-play-1678958952303_Landscape.jpg",
   "episodes": "12",
-  "view": 9999,
+  "currentEpisodes": "??",
+  "view": 0,
   "releaseDate": "10/01/2002",
   "news": true,
-  "reacts": 4,
+  "reacts": 0,
   "_status": "Lên lịch",
-  "categories": [{"_id": "648ae501467d3e29a27513ca", "title": "Ok la nhe 1"}, {"_id": "648ae5e3acdd172425fc56e4", "title": "Ok la nhe 1"}],
-  "country_of_origin":"China",
+  "categories": [{"_id": "66460041f74453a2927874b6", "title": "Tình cảm"}, {"_id": "66460074f74453a2927874c4", "title": "66460074f74453a2927874c4"}],
+  "country_of_origin": "Japan",
   "keySearch": "10/01/2002"
 }
 
@@ -84,7 +85,7 @@ Content-Type: application/json
 }
 
 ###search
-GET http://localhost:5000/api/products/search?skip=0&limit=10&key=&recently=true
+GET http://localhost:5000/api/products/search_recommend?skip=0&limit=10&key=&recently=true
 
 ###
 PUT http://localhost:5000/api/products/64e995b97c388de0ba6affc8
