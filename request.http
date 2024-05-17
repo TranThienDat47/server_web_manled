@@ -58,11 +58,11 @@ POST http://localhost:5000/api/products
 Content-Type: application/json
 
 {
-  "_name": "Lúc đó tôi đã chuyển sinh thành Slime: Giấc mộng Coleus",
-  "anotherName": "Tensei Shitara Suraimu Datta Ken",
-  "description": "Satoru Mikami vốn đang có cuộc sống bình lặng thì bị một gã côn đồ đâm chết trên phố. Anh kết thúc cuộc đời ở tuổi 37. Bỗng nhiên khi lấy lại ý thức, anh không thể nghe, cũng không thể nhìn thấy gì. Anh phát hiện ra mình đã chuyển sinh thành một con Slime.",
-  "img": "https://cdn.animevietsub.fun/data/poster/2024/03/30/animevsub-l8vf51JRem.jpg",
-  "background": "https://images.fptplay.net/media/OTT/VOD/2023/03/16/chuyen-sinh-thanh-slime-moi-lien-ket-do-tham-fpt-play-1678958952303_Landscape.jpg",
+  "_name": "Re:Monster",
+  "anotherName": "Re:Monster",
+  "description": "\" Re: Monster\" là một câu chuyện giả tưởng trong đó nhân vật chính bất ngờ bị đâm bởi một kẻ rình rập và tái sinh thành yêu tinh yếu nhất ở thế giới khác, đồng thời trải qua một quá trình tiến hóa bất thường với \"khả năng nuốt chửng\" của mình, khả năng này càng ăn càng mạnh. Nhân vật chính Goburou, người nhanh chóng vươn lên dẫn đầu cộng đồng yêu tinh, sống sót cùng những người bạn tài năng trong một thế giới, nơi mà chỉ có kẻ mạnh nhất mới có quyền.",
+  "img": "https://animehay.video//upload/poster/4024.jpg",
+  "background": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKVI4t8oi5pBpAHk42gJYeD1fEzISdwPSdd73GivM1SA&s",
   "episodes": "12",
   "currentEpisodes": "??",
   "view": 0,

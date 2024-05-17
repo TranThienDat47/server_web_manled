@@ -1,0 +1,3 @@
+Khó khăn: Có các công nghệ mới chưa được biết đến, chưa thể viết testcase, chưa thể hoàn thiện.
+Kết quả đạt được: Có thể viết được Resfull API cơ bản, xác thực middleware bằng accestoken, có kinh nghiệm xử lý, convert video với ffmpeg.
+                Sử dụng aggregate mongodb.
