@@ -59,6 +59,7 @@ class SeeLaterMovieServices {
                   _id: '$product._id',
                   ref_id: 1,
                   user_id: 1,
+                  currentEpisodes: 1,
                   img: '$product.img',
                   _name: '$product._name',
                   anotherName: '$product.anotherName',
