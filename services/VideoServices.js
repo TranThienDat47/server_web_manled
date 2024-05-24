@@ -291,10 +291,6 @@ class VideoServices {
 
                fs.mkdirSync(outputFolder + '/image', { recursive: true });
 
-               console.log(tempPic, durationOfVideo, `${tempPic}/${durationOfVideo}`);
-
-               const stepTime = tempPic / durationOfVideo;
-
                return new Promise((resolve, reject) => {
                   ffmpeg(videoPath)
                      .on('progress', (progress) => {

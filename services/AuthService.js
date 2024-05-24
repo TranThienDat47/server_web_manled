@@ -81,8 +81,10 @@ class AuthService {
 
          const passwordValid = await argon2
             .verify(user.password, password)
-            .then(() => {
-               return true;
+            .then((res) => {
+               if (res) {
+                  return true;
+               } else return false;
             })
             .catch((error) => ({
                success: false,

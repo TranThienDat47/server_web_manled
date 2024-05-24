@@ -427,8 +427,6 @@ class CommentService {
 
          const getLikeComments = await Comments.findOne(filter, {}, options);
 
-         console.log(getLikeComments.comment_details[0].likes);
-
          if (!getLikeComments)
             return {
                success: false,

@@ -19,8 +19,6 @@ passport.use(
 
             done(null, { token });
          } else {
-            console.log(profile._json);
-
             const result = await AuthService.loginWithPassport({
                username: profile._json.email,
                img: profile._json.picture,

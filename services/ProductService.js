@@ -59,8 +59,6 @@ class ProductServices {
             filter.categories = { $elemMatch: { _id: categories_id } };
          }
 
-         console.log(filter);
-
          const products = await Products.find(filter, {}, options);
 
          return { success: true, products };
