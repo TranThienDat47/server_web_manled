@@ -6,7 +6,7 @@ export const sendMail = async (to, suject, htmlContent) => {
       transporter = await nodemailer.createTransport({
          host: 'smtp.gmail.com',
          port: 587,
-         secure: false,
+         secure: true,
          type: 'oauth2',
          auth: {
             user: process.env.USERNAME_MAIL,

@@ -200,7 +200,7 @@ class AuthService {
          const result = await MailServices.sendHtmlMail(
             [email],
             'MANLED web account verification',
-            `<a href="http://${process.env.URL_VERIFY}/verify?email=${email}&token=${hashMail}&hashToken=${accessToken}">Please click here to confirm!</a>`,
+            `<a href="https://${process.env.URL_VERIFY}/verify?email=${email}&token=${hashMail}&hashToken=${accessToken}">Please click here to confirm!</a>`,
          );
 
          return { success: true, message: 'Send Mail successfully' };
