@@ -103,7 +103,7 @@ class VideoServices {
          videoIDGlobal = response.product_details._id;
       });
 
-      ffprobe(videoPath, { path: ffprobeStatic.path }, function (err, info) {
+      await ffprobe(videoPath, { path: ffprobeStatic.path }, function (err, info) {
          if (err) return done(err);
 
          durationOfVideo = info.streams[0].duration;

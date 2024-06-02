@@ -55,6 +55,10 @@ const ProductsSchema = new Schema(
          type: Number,
          default: 0,
       },
+      follows: {
+         type: Number,
+         default: 0,
+      },
       country_of_origin: {
          type: String,
       },

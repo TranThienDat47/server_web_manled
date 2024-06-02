@@ -46,13 +46,14 @@ class FollowServices {
                      {
                         $match: {
                            $expr: {
+                              //cho phép so sánh 2 trường trong cùng 1 collection
                               $and: [
                                  { $eq: ['$_id', '$$ref_id'] },
                                  {
                                     $regexMatch: {
                                        input: '$keySearch',
                                        regex: _key_more,
-                                       options: 'i',
+                                       options: 'i', //không phân biệt hoa thường
                                     },
                                  },
                               ],
@@ -114,6 +115,20 @@ class FollowServices {
          const newFollow = new Follows(obj);
 
          await newFollow.save();
+
+         const filter = { _id: obj.ref_id };
+         const update = { $inc: { follows: 1 } };
+         const updatedProduct = await Products.findOneAndUpdate(filter, update, {
+            new: true,
+            upsert: false,
+         });
+
+         if (!updatedProduct) {
+            return {
+               success: false,
+               message: 'Product not found or failed to update follows count',
+            };
+         }
 
          return { success: true, follows: newFollow };
       } catch (error) {
