@@ -25,7 +25,7 @@ const UserSchema = new Schema(
       },
       is_verify: {
          type: Boolean,
-         default: false,
+         default: true,
       },
       first_name: {
          type: String,
