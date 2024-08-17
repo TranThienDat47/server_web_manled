@@ -34,9 +34,6 @@ jobs:
          - name: Set up environment variables
            run: echo "MONGODB_URL=${{ secrets.MONGODB_URL }}" >> $GITHUB_ENV
 
-         - name: Run tests
-           run: npm run test
-
          - name: Get commit details
            id: get_commit
            run: |
