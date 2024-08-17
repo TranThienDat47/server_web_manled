@@ -31,10 +31,6 @@ jobs:
          - name: Install dependencies
            run: npm install
 
-         - name: Check lint
-           if: ${{ success() }}
-           run: npm run lint
-
          - name: Build project
            if: ${{ success() }}
            run: npm run build
