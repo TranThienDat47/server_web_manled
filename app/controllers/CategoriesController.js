@@ -1,4 +1,5 @@
 import CategoryService from '../../services/CategoryService.js';
+import { HttpMessage, HttpStatus } from '../../global/enumGlobal.js';
 
 class CategoriesController {
    async show(req, res) {
@@ -6,12 +7,15 @@ class CategoriesController {
          const _id = req.body._id;
          const result = await CategoryService.getOf(_id);
 
-         if (!result.success) return res.status(401).json(result);
+         if (!result.success) return res.status(HttpStatus.UNAUTHORIZED).json(result);
 
          return res.json(result);
       } catch (error) {
          console.log(error, ' (Row - 9)');
-         res.status(500).json({ success: false, message: 'Get categories failed!' });
+         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+            success: false,
+            message: HttpMessage.INTERNAL_SERVER_ERROR,
+         });
       }
    }
 
@@ -19,12 +23,14 @@ class CategoriesController {
       try {
          const result = await CategoryService.getAll();
 
-         if (!result.success) return res.status(401).json(result);
+         if (!result.success) return res.status(HttpStatus.UNAUTHORIZED).json(result);
 
          return res.json(result);
       } catch (error) {
-         console.log(error, ' (Row - 9)');
-         res.status(500).json({ success: false, message: 'Get categories failed!' });
+         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+            success: false,
+            message: HttpMessage.INTERNAL_SERVER_ERROR,
+         });
       }
    }
 
@@ -34,12 +40,14 @@ class CategoriesController {
       try {
          const result = await CategoryService.add({ title, description, parentID });
 
-         if (!result.success) return res.status(401).json(result);
+         if (!result.success) return res.status(HttpStatus.UNAUTHORIZED).json(result);
 
          return res.json(result);
       } catch (error) {
-         console.log(error, ' (Row - 29)');
-         res.status(500).json({ success: false, message: 'Registration failed!' });
+         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+            success: false,
+            message: HttpMessage.INTERNAL_SERVER_ERROR,
+         });
       }
    }
 
@@ -49,11 +57,14 @@ class CategoriesController {
       try {
          const result = await CategoryService.update({ title, description, parentID }, _id);
 
-         if (!result.success) return res.status(401).json(result);
+         if (!result.success) return res.status(HttpStatus.UNAUTHORIZED).json(result);
 
          return res.json(result);
       } catch (error) {
-         res.status(500).json({ success: false, message: 'Updated categories failed!' });
+         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+            success: false,
+            message: HttpMessage.INTERNAL_SERVER_ERROR,
+         });
       }
    }
 
@@ -63,13 +74,13 @@ class CategoriesController {
 
          const result = await CategoryService.delete(_id);
 
-         if (!result.success) return res.status(401).json(result);
+         if (!result.success) return res.status(HttpStatus.UNAUTHORIZED).json(result);
 
          return res.json(result);
       } catch (error) {
-         res.status(500).json({
+         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
             success: false,
-            message: 'Get categories failed! (CategoriesController: Row - 91)',
+            message: `${HttpMessage.INTERNAL_SERVER_ERROR}`,
          });
       }
    }

@@ -1,3 +1,4 @@
+import { HttpMessage, HttpStatus } from '../../global/enumGlobal.js';
 import AuthService from '../../services/AuthService.js';
 
 class AuthController {
@@ -5,15 +6,15 @@ class AuthController {
       const { username, password, first_name, last_name } = req.body;
       if (!username || !password || !first_name || !last_name)
          return res
-            .status(400)
-            .json({ success: false, message: 'Missing username and/or password' });
+            .status(HttpStatus.BAD_REQUEST)
+            .json({ success: false, message: HttpMessage.BAD_REQUEST });
 
       AuthService.register({ username, password, first_name, last_name })
          .then((result) => {
             const { success, message, username, accessToken } = result;
 
             if (!success)
-               return res.status(400).json({
+               return res.status(HttpStatus.BAD_REQUEST).json({
                   success,
                   message,
                   username,
@@ -28,9 +29,9 @@ class AuthController {
             });
          })
          .catch((err) => {
-            return res.status(400).json({
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
                success: false,
-               message: 'Registed failed!',
+               message: HttpMessage.INTERNAL_SERVER_ERROR,
                username: null,
                accessToken: null,
                error: err.message || err,
@@ -42,14 +43,16 @@ class AuthController {
       const { username, password } = req.body;
 
       if (!username || !password)
-         return res.status(400).json({ success: false, message: 'Empty account' });
+         return res
+            .status(HttpStatus.BAD_REQUEST)
+            .json({ success: false, message: HttpMessage.BAD_REQUEST });
 
       AuthService.login(username, password)
          .then((result) => {
             const { success, message, is_verify, accessToken } = result;
 
             if (!success)
-               return res.status(400).json({
+               return res.status(HttpStatus.BAD_REQUEST).json({
                   success,
                   message,
                   is_verify,
@@ -64,9 +67,9 @@ class AuthController {
             });
          })
          .catch((err) => {
-            return res.status(400).json({
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
                success: false,
-               message: 'Registed failed!',
+               message: HttpMessage.INTERNAL_SERVER_ERROR,
                is_verify: null,
                accessToken: null,
             });
@@ -78,14 +81,16 @@ class AuthController {
          token = req.query.token;
 
       if (!email || !token)
-         return res.status(400).json({ success: false, message: 'Email or token is null' });
+         return res
+            .status(HttpStatus.BAD_REQUEST)
+            .json({ success: false, message: HttpMessage.BAD_REQUEST });
 
       AuthService.verify(email, token)
          .then((result) => {
             const { success, message } = result;
 
             if (!success)
-               return res.status(401).json({
+               return res.status(HttpStatus.UNAUTHORIZED).json({
                   success: success,
                   message: message,
                });
@@ -96,9 +101,9 @@ class AuthController {
             });
          })
          .catch((err) => {
-            return res.status(401).json({
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
                success: false,
-               message: err.message,
+               message: HttpMessage.INTERNAL_SERVER_ERROR,
             });
          });
    }
@@ -119,7 +124,9 @@ class AuthController {
             return res.json({ success: true, valid: false, message: result.message });
          })
          .catch((err) => {
-            return res.status(400).json({ success: false, valid: null, message: result.message });
+            return res
+               .status(HttpStatus.INTERNAL_SERVER_ERROR)
+               .json({ success: false, valid: null, message: HttpMessage.INTERNAL_SERVER_ERROR });
          });
    }
 
@@ -131,14 +138,19 @@ class AuthController {
             const { success, message, is_verify, user } = result;
 
             if (!success)
-               return res.status(400).json({ success: success, is_verify, message, user });
+               return res
+                  .status(HttpStatus.BAD_REQUEST)
+                  .json({ success: success, is_verify, message, user });
 
             return res.json({ success: success, message, is_verify, user });
          })
          .catch((err) => {
-            return res
-               .status(400)
-               .json({ success: success, is_verify: null, message: err.message, user });
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+               success: false,
+               is_verify: null,
+               message: HttpMessage.INTERNAL_SERVER_ERROR,
+               user: null,
+            });
          });
    }
 
@@ -149,12 +161,15 @@ class AuthController {
          .then((result) => {
             const { success, message } = result;
 
-            if (!success) return res.status(400).json({ success: success, message });
+            if (!success)
+               return res.status(HttpStatus.BAD_REQUEST).json({ success: success, message });
 
             return res.json({ success: success, message });
          })
          .catch((err) => {
-            return res.status(400).json({ success: success, message: err.message });
+            return res
+               .status(HttpStatus.INTERNAL_SERVER_ERROR)
+               .json({ success: false, message: HttpMessage.INTERNAL_SERVER_ERROR });
          });
    }
 }

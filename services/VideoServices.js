@@ -135,20 +135,20 @@ class VideoServices {
                return new Promise((resolve, reject) => {
                   ffmpeg(videoPath)
                      .addOptions([
-                        //360
+                        // Chất lượng hình ảnh 360p
                         '-profile:v main',
                         '-vf scale=w=640:h=360:force_original_aspect_ratio=decrease',
                         '-c:a aac',
                         '-ar 48000',
-                        '-b:a 96k',
+                        '-b:a 64k', // Giảm bitrate âm thanh
                         '-c:v h264',
-                        '-crf 20',
+                        '-crf 40', // Tăng giá trị CRF để giảm chất lượng video
                         '-g 48',
                         '-keyint_min 48',
                         '-sc_threshold 0',
-                        '-b:v 800k',
-                        '-maxrate 856k',
-                        '-bufsize 1200k',
+                        '-b:v 360k', // Giảm bitrate video
+                        '-maxrate 600k',
+                        '-bufsize 1000k',
                         '-hls_time 10',
                         `-hls_segment_filename ${outputFolder + '/360'}/${timestamp}_360p_%03d.ts`,
                         '-hls_playlist_type vod',
@@ -290,6 +290,8 @@ class VideoServices {
                }
 
                fs.mkdirSync(outputFolder + '/image', { recursive: true });
+
+               const stepTime = tempPic / durationOfVideo;
 
                return new Promise((resolve, reject) => {
                   ffmpeg(videoPath)

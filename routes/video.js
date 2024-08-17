@@ -1,7 +1,4 @@
-import pkg from 'mongoose';
-import mongoose from 'mongoose';
 import express from 'express';
-import fs from 'fs';
 
 import VideoInfo from '../app/models/VideoInfo.js';
 import TSFile from '../app/models/TSFile.js';
@@ -18,6 +15,8 @@ const router = express.Router();
 
 router.get('/stream/:video_id', async (req, res) => {
    const typeFile = req.query;
+
+   console.log(typeFile);
 
    if (typeFile.mode && typeFile.mode === 'm3u8') {
       try {

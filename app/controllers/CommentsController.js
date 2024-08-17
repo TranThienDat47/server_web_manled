@@ -1,4 +1,5 @@
 import CommentService from '../../services/CommentService.js';
+import { HttpMessage, HttpStatus } from '../../global/enumGlobal.js';
 
 class CommentsController {
    async getCountCommentOfRoot(req, res) {
@@ -8,18 +9,19 @@ class CommentsController {
          .then((result) => {
             const { success, count } = result;
 
-            if (!success)
-               return res.status(401).json({
+            if (!success) {
+               return res.status(HttpStatus.UNAUTHORIZED).json({
                   success: false,
-                  message: 'Get count comments failed!',
+                  message: HttpMessage.UNAUTHORIZED,
                });
+            }
 
             return res.json({ success: true, count });
          })
          .catch((err) => {
-            return res.status(401).json({
+            return res.status(HttpStatus.UNAUTHORIZED).json({
                success: false,
-               message: 'Get count comments failed!',
+               message: HttpMessage.UNAUTHORIZED,
             });
          });
    }
@@ -31,18 +33,19 @@ class CommentsController {
          .then((result) => {
             const { success, comments } = result;
 
-            if (!success)
-               return res.status(401).json({
+            if (!success) {
+               return res.status(HttpStatus.UNAUTHORIZED).json({
                   success: false,
-                  message: 'Get comments failed!',
+                  message: HttpMessage.UNAUTHORIZED,
                });
+            }
 
             return res.json({ success: true, comments });
          })
          .catch((err) => {
-            return res.status(401).json({
+            return res.status(HttpStatus.UNAUTHORIZED).json({
                success: false,
-               message: 'Get comments failed!',
+               message: HttpMessage.UNAUTHORIZED,
             });
          });
    }
@@ -50,25 +53,32 @@ class CommentsController {
    async add(req, res) {
       const { user_id, content, parent_id, reply_with, isReply = false } = req.body;
 
-      if (!parent_id || !user_id || !content)
-         return res.status(400).json({ success: false, message: 'Comments is required' });
-      else {
+      if (!parent_id || !user_id || !content) {
+         return res.status(HttpStatus.BAD_REQUEST).json({
+            success: false,
+            message: HttpMessage.BAD_REQUEST,
+         });
+      } else {
          CommentService.add({ user_id, parent_id, content, reply_with }, isReply)
             .then((result) => {
                const { success, comment, message } = result;
 
-               if (!success)
-                  return res.status(401).json({
+               if (!success) {
+                  return res.status(HttpStatus.UNAUTHORIZED).json({
                      success: false,
                      message: message,
                   });
+               }
                res.json({
                   success: true,
                   comments: comment,
                });
             })
             .catch((err) => {
-               return res.status(500).json({ success: false, message: 'Add comments failed!' });
+               return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+                  success: false,
+                  message: HttpMessage.INTERNAL_SERVER_ERROR,
+               });
             });
       }
    }
@@ -76,18 +86,22 @@ class CommentsController {
    async update(req, res) {
       const { new_content, comment_id } = req.body;
 
-      if (!comment_id || !new_content)
-         return res.status(400).json({ success: false, message: 'Comments is required' });
-      else {
+      if (!comment_id || !new_content) {
+         return res.status(HttpStatus.BAD_REQUEST).json({
+            success: false,
+            message: HttpMessage.BAD_REQUEST,
+         });
+      } else {
          CommentService.update(comment_id, new_content)
             .then((result) => {
                const { success, comment, message } = result;
 
-               if (!success)
-                  return res.status(401).json({
+               if (!success) {
+                  return res.status(HttpStatus.UNAUTHORIZED).json({
                      success: false,
                      message: message,
                   });
+               }
 
                res.json({
                   success: true,
@@ -95,9 +109,10 @@ class CommentsController {
                });
             })
             .catch((err) => {
-               return res
-                  .status(500)
-                  .json({ success: false, message: 'Updated comments failed!1' });
+               return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+                  success: false,
+                  message: HttpMessage.INTERNAL_SERVER_ERROR,
+               });
             });
       }
    }
@@ -105,18 +120,22 @@ class CommentsController {
    async likeComment(req, res) {
       const { comment_id, user_id } = req.body;
 
-      if (!comment_id || !user_id)
-         return res.status(400).json({ success: false, message: 'Comments is required' });
-      else {
+      if (!comment_id || !user_id) {
+         return res.status(HttpStatus.BAD_REQUEST).json({
+            success: false,
+            message: HttpMessage.BAD_REQUEST,
+         });
+      } else {
          await CommentService.likeComment({ comment_id, user_id })
             .then((result) => {
                const { success, likeComment, message } = result;
 
-               if (!success)
-                  return res.status(401).json({
+               if (!success) {
+                  return res.status(HttpStatus.UNAUTHORIZED).json({
                      success: false,
                      message: message,
                   });
+               }
 
                res.json({
                   success: true,
@@ -124,27 +143,33 @@ class CommentsController {
                });
             })
             .catch((err) => {
-               return res
-                  .status(500)
-                  .json({ success: false, message: 'Updated comments failed!1' });
+               return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+                  success: false,
+                  message: HttpMessage.INTERNAL_SERVER_ERROR,
+               });
             });
       }
    }
+
    async disLikeComment(req, res) {
       const { comment_id, user_id } = req.body;
 
-      if (!comment_id || !user_id)
-         return res.status(400).json({ success: false, message: 'Comments is required' });
-      else {
+      if (!comment_id || !user_id) {
+         return res.status(HttpStatus.BAD_REQUEST).json({
+            success: false,
+            message: HttpMessage.BAD_REQUEST,
+         });
+      } else {
          await CommentService.disLikeComment({ comment_id, user_id })
             .then((result) => {
                const { success, likeComment, message } = result;
 
-               if (!success)
-                  return res.status(401).json({
+               if (!success) {
+                  return res.status(HttpStatus.UNAUTHORIZED).json({
                      success: false,
                      message: message,
                   });
+               }
 
                res.json({
                   success: true,
@@ -152,9 +177,10 @@ class CommentsController {
                });
             })
             .catch((err) => {
-               return res
-                  .status(500)
-                  .json({ success: false, message: 'Updated comments failed!1' });
+               return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+                  success: false,
+                  message: HttpMessage.INTERNAL_SERVER_ERROR,
+               });
             });
       }
    }
@@ -163,17 +189,21 @@ class CommentsController {
       const { comment_id, user_id } = req.body;
 
       if (!comment_id) {
-         res.status(400).json({ success: false, message: 'comments id requiredc' });
+         res.status(HttpStatus.BAD_REQUEST).json({
+            success: false,
+            message: HttpMessage.BAD_REQUEST,
+         });
       } else {
          await CommentService.checkUserLikeComment({ comment_id, user_id })
             .then((result) => {
                const { success, message, likeComment } = result;
-               if (!success)
-                  return res.status(401).json({
+               if (!success) {
+                  return res.status(HttpStatus.UNAUTHORIZED).json({
                      success: false,
                      message: message,
                      likeComment: null,
                   });
+               }
 
                res.json({
                   success: true,
@@ -181,9 +211,9 @@ class CommentsController {
                });
             })
             .catch(() => {
-               return res.status(500).json({
+               return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
                   success: false,
-                  message: 'check users liked comments failed!1',
+                  message: HttpMessage.INTERNAL_SERVER_ERROR,
                   likeComment: null,
                });
             });
@@ -194,17 +224,21 @@ class CommentsController {
       const { comment_detail_id } = req.body;
 
       if (!comment_detail_id) {
-         res.status(400).json({ success: false, message: 'comments id required' });
+         res.status(HttpStatus.BAD_REQUEST).json({
+            success: false,
+            message: HttpMessage.BAD_REQUEST,
+         });
       } else {
          await CommentService.getNumLikesComments({ comment_detail_id })
             .then((result) => {
                const { success, message, num_like_comments } = result;
-               if (!success)
-                  return res.status(401).json({
+               if (!success) {
+                  return res.status(HttpStatus.UNAUTHORIZED).json({
                      success: false,
                      message: message,
                      num_like_comments: null,
                   });
+               }
 
                res.json({
                   success: true,
@@ -212,9 +246,9 @@ class CommentsController {
                });
             })
             .catch(() => {
-               return res.status(500).json({
+               return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
                   success: false,
-                  message: 'check users liked comments failed!1',
+                  message: HttpMessage.INTERNAL_SERVER_ERROR,
                   num_like_comments: null,
                });
             });
