@@ -31,10 +31,6 @@ jobs:
          - name: Install dependencies
            run: npm install
 
-         - name: Build project
-           if: ${{ success() }}
-           run: npm run build
-
          - name: Set up environment variables
            run: echo "MONGODB_URL=${{ secrets.MONGODB_URL }}" >> $GITHUB_ENV
 
